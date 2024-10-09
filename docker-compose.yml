@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  book_catalog:
+    build: ./book_catalog
+    ports:
+      - "4001:8000"  # Map host port 4001 to container port 8000
+    environment:
+      DATABASE_URL: "postgresql://ashok_project_part_3_1atp_user:CnHiZzMrrSHL04EMYio15eDUwTmGK7LJ@dpg-cs2vivhu0jms73917uhg-a.oregon-postgres.render.com/ashok_project_part_3_1atp"
+
+  inventory_management:
+    build: ./inventory_management
+    ports:
+      - "4002:8000"  # Map host port 4002 to container port 8000
+    environment:
+      DATABASE_URL: "postgresql://ashok_project_part_3_1atp_user:CnHiZzMrrSHL04EMYio15eDUwTmGK7LJ@dpg-cs2vivhu0jms73917uhg-a.oregon-postgres.render.com/ashok_project_part_3_1atp"

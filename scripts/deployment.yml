@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ashok-book-catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashok-book-catalog
+  template:
+    metadata:
+      labels:
+        app: ashok-book-catalog
+    spec:
+      containers: 
+      - name: ashok-book-catalog
+        image: ashokprojectpart3.azurecr.io/ashok-bishowkarma-sit722-part3-book_catalog:latest
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://ashok_project_part_3_1atp_user:CnHiZzMrrSHL04EMYio15eDUwTmGK7LJ@dpg-cs2vivhu0jms73917uhg-a.oregon-postgres.render.com/ashok_project_part_3_1atp"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ashok-book-catalog
+spec:
+  selector:
+    app: ashok-book-catalog
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 4001
+      targetPort: 8000
+      
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ashok-inventory-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashok-inventory-management
+  template:
+    metadata:
+      labels:
+        app: ashok-inventory-management
+    spec:
+      containers: 
+      - name: ashok-inventory-management
+        image: ashokprojectpart3.azurecr.io/ashok-bishowkarma-sit722-part3-inventory_management:latest
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://ashok_project_part_3_1atp_user:CnHiZzMrrSHL04EMYio15eDUwTmGK7LJ@dpg-cs2vivhu0jms73917uhg-a.oregon-postgres.render.com/ashok_project_part_3_1atp"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ashok-inventory-management
+spec:
+  selector:
+    app: ashok-inventory-management
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 4002
+      targetPort: 8000
+      
